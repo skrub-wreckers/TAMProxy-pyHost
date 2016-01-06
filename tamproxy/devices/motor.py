@@ -1,3 +1,5 @@
+from six import int2byte
+
 from .device import Device
 from .. import config as c
 
@@ -14,11 +16,11 @@ class Motor(Device):
 
     @property
     def add_payload(self):
-        return self.DEVICE_CODE + chr(self.dir_pin) + chr(self.pwm_pin)
+        return self.DEVICE_CODE + int2byte(self.dir_pin) + int2byte(self.pwm_pin)
 
     def write(self, direction, pwm):
         self.tamp.send_request(self.id,
                                self.WRITE_CODE + 
-                               chr(direction > 0) + 
-                               chr((int(pwm) >> 8) & 0xFF) + 
-                               chr(int(pwm) & 0xFF))
+                               int2byte(direction > 0) + 
+                               int2byte((int(pwm) >> 8) & 0xFF) + 
+                               int2byte(int(pwm) & 0xFF))

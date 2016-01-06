@@ -1,3 +1,4 @@
+from six import int2byte
 from .device import Device
 from .. import config as c
 
@@ -17,7 +18,7 @@ class DigitalInput(Device):
 
     @property
     def add_payload(self):
-        return self.DEVICE_CODE + chr(self.pin) + chr(self.pullup)
+        return self.DEVICE_CODE + int2byte(self.pin) + int2byte(self.pullup)
 
     @property
     def changed(self):

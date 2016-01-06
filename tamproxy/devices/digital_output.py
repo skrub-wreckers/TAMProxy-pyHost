@@ -1,3 +1,4 @@
+from six import int2byte
 from .device import Device
 from .. import config as c
 
@@ -13,7 +14,7 @@ class DigitalOutput(Device):
 
     @property
     def add_payload(self):
-        return self.DEVICE_CODE + chr(self.pin)
+        return self.DEVICE_CODE + int2byte(self.pin)
 
     def write(self, value):
-        self.tamp.send_request(self.id, self.WRITE_CODE + chr(value))
+        self.tamp.send_request(self.id, self.WRITE_CODE + int2byte(value))

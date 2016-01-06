@@ -1,3 +1,4 @@
+from six import int2byte
 from .device import Device
 from .. import config as c
 
@@ -15,7 +16,7 @@ class AnalogInput(Device):
 
     @property
     def add_payload(self):
-        return self.DEVICE_CODE + chr(self.pin)
+        return self.DEVICE_CODE + int2byte(self.pin)
 
     def update(self):
         self.tamp.send_request(self.id, self.READ_CODE, self.handle_pin_update)

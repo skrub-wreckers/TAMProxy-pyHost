@@ -1,4 +1,4 @@
-from six import print_
+from six import print_, int2byte
 
 from serial import SerialException
 from multiprocessing import Process, Pipe, Event
@@ -218,7 +218,7 @@ class PacketParser(object):
         while True:
             new_byte = self.tserial.read()
             if not new_byte: break
-            if new_byte == chr(self.START_BYTE) and not self.receive_buffer:
+            if new_byte == int2byte(self.START_BYTE) and not self.receive_buffer:
                 # Starting a new raw packet
                 self.error_flag = False
                 self.receive_length = self.MAX_PACKET_SIZE
