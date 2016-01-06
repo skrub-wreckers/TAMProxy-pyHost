@@ -1,3 +1,4 @@
+from six import iteritems, text_type, int2byte
 from time import time
 import yaml
 import os
@@ -33,6 +34,14 @@ with open(target, 'r') as config_file:
     config_yaml = config_file.read()
 
 config = dotdict(yaml.load(config_yaml))
+
+# For python 3 compatibility, we want all the yaml keys to be bytes not unicode
+for devname, props in iteritems(config.devices):
+    for name, value in iteritems(props):
+        if name.endswith('code'):
+            if isinstance(value, text_type):
+                props[name] = value.encode('ascii')
+
 
 class Timer(object):
 
