@@ -1,5 +1,7 @@
+from six import print_
+
 from threading import Thread, Event
-from Queue import Queue, Empty
+from six.moves.queue import Queue, Empty
 from .packet_controller import PacketController
 from .. import config as c
 
@@ -41,9 +43,9 @@ class PacketForwarder(Thread):
                 if self.reset_callback: self.reset_callback()
             elif len(response) == 1 and response in c.responses:
                 if response == 'G': continue
-                print ("Firmware responded with an error: {} "
-                       "for the request {}").format(
-                            c.responses[response].msg, request)
+                print_("Firmware responded with an error: {} "
+                       "for the request {}".format(
+                            c.responses[response].msg, request))
             elif request in self.callback_dict:
                 self.callback_dict[request](request, response)
 

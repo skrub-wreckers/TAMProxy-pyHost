@@ -10,9 +10,10 @@ setup(
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.5',
     ],
 
     keywords='maslab tamproxy',
     packages=['tamproxy'],
-    install_requires=['numpy', 'pyserial>=3.0', 'PyYAML'],
+    install_requires=['six', 'numpy', 'pyserial>=3.0', 'PyYAML'],
 )

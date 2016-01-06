@@ -1,3 +1,6 @@
+from six import print_
+from six.moves import range
+
 from tamproxy import Sketch, SyncedSketch, Timer
 from tamproxy.devices import DigitalInput
 
@@ -14,18 +17,18 @@ class Benchmark(Sketch):
 
     def setup(self):
         self.testpins = []
-        for i in xrange(34):
+        for i in range(34):
             self.testpins.append(DigitalInput(self.tamp, i))
 
     def loop(self):
         if self.elapsed > 5:
-            print self.throughput
-            print self.frequency
-            print self.sleep_duration
+            print_(self.throughput)
+            print_(self.frequency)
+            print_(self.sleep_duration)
             self.stop()
-        for i in xrange(34):
+        for i in range(34):
             if self.testpins[i].changed:
-                print i, self.testpins[i].val
+                print_(i, self.testpins[i].val)
 
 if __name__ == "__main__":
     sketch = Benchmark(0.001)

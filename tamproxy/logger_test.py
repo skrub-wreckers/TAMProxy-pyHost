@@ -1,3 +1,5 @@
+from six.moves import range
+
 import logging
 from utils import config as c 
 
@@ -10,7 +12,7 @@ logging.config.dictConfig(c.logging)
 logger = logging.getLogger('simpleExample')
 
 # 'application' code
-for i in xrange(100):
+for i in range(100):
     logger.debug('debug message')
     logger.info('info message')
     logger.warn('warn message')

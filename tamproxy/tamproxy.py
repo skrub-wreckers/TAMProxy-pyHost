@@ -1,3 +1,4 @@
+from six import iteritems
 from .comm import PacketForwarder
 from . import config as c
 
@@ -26,7 +27,7 @@ class TAMProxy(object):
 
     def handle_device_reset(self):
         self.clear_devices()
-        for device_id, add_vals in self.recovery_data.iteritems():
+        for device_id, add_vals in iteritems(self.recovery_data):
             self.add_device(*add_vals)
         if not self.started: self.started = True
 
@@ -55,7 +56,7 @@ class TAMProxy(object):
                 self.q.put_nowait(((device_id, payload, continuous, weight, remove),
                             callback))
             except Full:
-                print "Packet queue is full, can't send packets fast enough"
+                print_("Packet queue is full, can't send packets fast enough")
             return True
         else: return False
 

@@ -1,9 +1,11 @@
+from six import print_
+
 from serial import SerialException
 from multiprocessing import Process, Pipe, Event
 from collections import namedtuple
 from time import sleep, time
 from threading import Thread
-from Queue import Queue
+from six.moves.queue import Queue
 from struct import pack, unpack
 import numpy as np
 import logging
@@ -79,7 +81,7 @@ class PacketController(Process):
                     self.continuous_requests.add(packet_request[:2])
                     self.weighted_tdma_list += (
                         [packet_request[:2]] * packet_request.weight)
-                else: 
+                else:
                     self.continuous_requests.discard(packet_request[:2])
             else:
                 return packet_request[:2]
@@ -103,7 +105,7 @@ class PacketController(Process):
                 packet, time_sent = self.en_route[pid]
                 dt = time() - time_sent
                 if dt > self.timeout:
-                    print dt, self.timeout, self.srtt, self.rttdev
+                    print_(dt, self.timeout, self.srtt, self.rttdev)
                     self.en_route[pid] = (packet, time())
                     self.transmit(pid, *packet[:2])
                     return
@@ -138,7 +140,7 @@ class PacketController(Process):
     def process_packet(self, pid, payload):
         self.packets_received += 1
         if pid not in self.en_route:
-            print "retransmitted packet received"
+            print_("retransmitted packet received")
             return
         sent_packet, time_sent = self.en_route.pop(pid)
         if self.ENABLE_TIMEOUT:
@@ -171,7 +173,7 @@ class PacketController(Process):
     def run(self):
         i = self.SERIAL_RETRIES
         while i >= 0:
-            try: 
+            try:
                 self.connect()
                 i = self.SERIAL_RETRIES
                 while not self._stop.is_set():
@@ -182,18 +184,18 @@ class PacketController(Process):
                     SerialPortUnavailableException) as e:
                 i -= 1
                 if i == 0:
-                    print "[SerialController] Giving up, hit maximum serial retries"
+                    print_("[SerialController] Giving up, hit maximum serial retries")
                     return
                 else:
-                    print "[SerialController] {}: {}".format(e.__class__.__name__, e)
-                    print ("[SerialController] ",
+                    print_("[SerialController] {}: {}".format(e.__class__.__name__, e))
+                    print_("[SerialController] ",
                           "Retrying connection in 1 second, "
                           "{} tries left".format(i))
                     sleep(self.SERIAL_RETRY_TIMEOUT)
                     continue
             except SerialPortEstablishException as e:
-                print e
-                print "[SerialController] Quitting process..."
+                print_(e)
+                print_("[SerialController] Quitting process...")
                 return
             except KeyboardInterrupt:
                 return
@@ -246,7 +248,7 @@ class PacketParser(object):
             self.receive_buffer = []
 
     def raise_error_flag(self, msg):
-        print msg
+        print_(msg)
         self.error_flag = True
         self.receive_buffer = []
 

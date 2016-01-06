@@ -1,11 +1,12 @@
+from six import print_, add_metaclass
+
 from abc import ABCMeta, abstractmethod
 from tamproxy import TAMProxy
 from time import sleep, time
 from . import config as c
 
+@add_metaclass(ABCMeta)
 class Sketch(object):
-    __metaclass__ = ABCMeta
-
     def __init__(self, sleep_duration=c.host.default_sleep_duration):
         self.sleep_duration = sleep_duration
         self.tamp = TAMProxy()
@@ -45,7 +46,7 @@ class Sketch(object):
         self.start()
         try:
             self.setup()
-            print "Entered loop"
+            print_("Entered loop")
             while not self.stopped:
                 self.loop()
                 self.iterations += 1
@@ -53,7 +54,7 @@ class Sketch(object):
         except KeyboardInterrupt:
             self.stop() # as if the sketch had called it
         self.tamp.stop()
-        print "Sketch finished running"
+        print_("Sketch finished running")
 
 class SyncedSketch(Sketch):
 
@@ -81,7 +82,7 @@ class SyncedSketch(Sketch):
         self.start()
         try:
             self.setup()
-            print "Entered loop"
+            print_("Entered loop")
             while not self.stopped:
                 self.loop()
                 self.iterations += 1
@@ -91,4 +92,4 @@ class SyncedSketch(Sketch):
         except KeyboardInterrupt:
             self.stop()
         self.tamp.stop()
-        print "\nSketch finished running"
+        print_("\nSketch finished running")
