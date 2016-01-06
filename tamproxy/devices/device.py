@@ -1,3 +1,4 @@
+from six import indexbytes
 from abc import ABCMeta, abstractproperty
 from .. import TAMProxy
 
@@ -19,7 +20,7 @@ class Device(object):
         raise NotImplementedError
 
     def handle_add_response(self, request, response):
-        self.id = ord(response[1])
+        self.id = indexbytes(response, 1)
         self.tamp.recovery_data[self.id] = (self.add_payload,
                                           self.handle_add_response)
 

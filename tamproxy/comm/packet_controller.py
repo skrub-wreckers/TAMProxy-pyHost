@@ -244,7 +244,7 @@ class PacketParser(object):
             else: self.receive_length = ord(byte)
         elif len(self.receive_buffer) == self.receive_length:
             # the packet is done
-            self.raw_packets.append("".join(self.receive_buffer))
+            self.raw_packets.append(b"".join(self.receive_buffer))
             self.receive_buffer = []
 
     def raise_error_flag(self, msg):
