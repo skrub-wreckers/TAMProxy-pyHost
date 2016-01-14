@@ -11,6 +11,7 @@ class Odometer(Device):
 		self.right_enc = right_enc
 		self.gyro = gyro
 		self.alpha = alpha
+		self.val = None
         super(Odometer, self).__init__(tamproxy)
         while self.id is None: pass
 
@@ -20,4 +21,7 @@ class Odometer(Device):
 
     def read(self):
         self.tamp.send_request(self.id,
-                               self.READ_CODE)
+                               self.READ_CODE, self.handle_request)
+							   
+	def handle_reading(self, request, response):
+		self.val = response
