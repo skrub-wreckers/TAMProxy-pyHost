@@ -2,11 +2,14 @@ from .device import Device, ContinuousReadDevice
 from .. import config as c
 
 import struct
+from collections import namedtuple
 
 class Odometer(ContinuousReadDevice):
 
     DEVICE_CODE =   c.devices.odometer.code
     READ_CODE =    c.devices.odometer.read_code
+
+    Reading = namedtuple('Reading', 'theta x y')
 
     def __init__(self, tamproxy, left_enc, right_enc, gyro, alpha):
         self.left_enc = left_enc
@@ -33,4 +36,4 @@ class Odometer(ContinuousReadDevice):
         )
 
     def _handle_update(self, request, response):
-        self.val = struct.unpack('!f', response)[0]
+        self.val = self.Reading._make(struct.unpack('!fff', response))
