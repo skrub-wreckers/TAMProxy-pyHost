@@ -32,9 +32,5 @@ class Odometer(ContinuousReadDevice):
             chr(self.alpha.id)
         )
 
-    def read(self):
-        self.tamp.send_request(self.id,
-                               self.READ_CODE, self.handle_request)
-
     def _handle_update(self, request, response):
         self.val = struct.unpack('!f', response)[0]
