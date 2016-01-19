@@ -10,10 +10,10 @@ class Odometer(ContinuousReadDevice):
 
     def __init__(self, tamproxy, left_enc, right_enc, gyro, alpha):
         self.left_enc = left_enc
-		self.right_enc = right_enc
-		self.gyro = gyro
-		self.alpha = alpha
-		self.val = 0
+        self.right_enc = right_enc
+        self.gyro = gyro
+        self.alpha = alpha
+        self.val = 0
         super(Odometer, self).__init__(tamproxy, continuous=False)
 
     def __repr__(self):
@@ -36,5 +36,5 @@ class Odometer(ContinuousReadDevice):
         self.tamp.send_request(self.id,
                                self.READ_CODE, self.handle_request)
 
-	def _handle_update(self, request, response):
+    def _handle_update(self, request, response):
         self.val = struct.unpack('!f', response)[0]
