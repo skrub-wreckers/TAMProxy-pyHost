@@ -29,7 +29,7 @@ class Odometer(ContinuousReadDevice):
             chr(self.left_enc.id) +
             chr(self.right_enc.id) +
             chr(self.gyro.id) +
-            chr(self.alpha.id)
+            struct.pack('!f', self.alpha)
         )
 
     def _handle_update(self, request, response):
