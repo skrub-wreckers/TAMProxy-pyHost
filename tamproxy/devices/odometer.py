@@ -16,7 +16,7 @@ class Odometer(ContinuousReadDevice):
         self.right_enc = right_enc
         self.gyro = gyro
         self.alpha = alpha
-        self.val = 0
+        self.val = self.Reading(0, 0, 0)
         super(Odometer, self).__init__(tamproxy, continuous=False)
 
     def __repr__(self):
