@@ -4,8 +4,8 @@ import .analog_input import AnalogInput
 
 class ShortIR(AnalogInput):
 
-    DEVICE_CODE =   c.devices.analog_input.code
-    READ_CODE =     c.devices.analog_input.read_code
+    DEVICE_CODE =   c.devices.ir.code
+    READ_CODE =     c.devices.ir.read_code
 
     def __init__(self, tamproxy, pin, continuous=False):
         self.pin = pin
@@ -15,4 +15,4 @@ class ShortIR(AnalogInput):
 
     def _handle_update(self, request, response):
         self.val = (ord(response[0])<<8) + ord(response[1])
-        # Have some conversion in here for doing val to distance
+        # Have some conversion in here for doing moving average to distance
