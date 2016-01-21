@@ -1,5 +1,7 @@
 from abc import ABCMeta, abstractproperty, abstractmethod
 import logging
+import threading
+import time
 
 from .. import TAMProxy
 
@@ -53,19 +55,29 @@ class ContinuousReadDevice(Device):
 
     def __init__(self, tamproxy, continuous=True):
         super(ContinuousReadDevice, self).__init__(tamproxy)
+        self.update_event = threading.Event()
+        self.updated_at = None
         if continuous: self.start_continuous()
 
     def update(self):
-        self.tamp.send_request(self.id, self.READ_CODE, self._handle_update)
+        self.tamp.send_request(self.id, self.READ_CODE, self.__handle_update)
 
     def start_continuous(self, weight=1):
-        self.tamp.send_request(self.id, self.READ_CODE, self._handle_update,
+        self.tamp.send_request(self.id, self.READ_CODE, self.__handle_update,
                              continuous=True, weight=weight)
 
     def stop_continuous(self):
         self.tamp.send_request(self.id, self.READ_CODE, self.tamp.empty_callback,
                              continuous=True, weight=1, remove=True)
 
+    def __handle_update(self, request, response):
+        try:
+            return self._handle_update(request, response)
+            self.updated_at = time.time()
+        finally:
+            self.update_event.set()
+            self.update_event.clear()
+
     @abstractmethod
-    def _handle_update(self):
+    def _handle_update(self, request, response):
         raise NotImplementedError
