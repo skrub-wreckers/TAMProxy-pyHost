@@ -105,6 +105,9 @@ devices:
     color:
         code:           C       # 0x43 (color sensor)
         read_code:      R       # 0x52
+    odometer:
+        code:           O       # 0x4f
+        read_code:      R       # 0x52
 
 packet:
     start_byte:         0xF0
