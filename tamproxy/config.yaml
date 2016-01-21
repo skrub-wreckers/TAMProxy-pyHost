@@ -101,6 +101,7 @@ devices:
         code:           U       # 0x55
     ir:
         code:           I       # 0x49
+        read_code:      R       # 0x52
     color:
         code:           C       # 0x43 (color sensor)
         read_code:      R       # 0x52
