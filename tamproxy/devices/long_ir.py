@@ -1,3 +1,4 @@
+import warnings
 from .device import ContinuousReadDevice
 from .. import config as c
 
@@ -26,9 +27,10 @@ class LongIR(ContinuousReadDevice):
         self.distTicks = (ord(response[0])<<8) + ord(response[1])
         # Set cutoff of where can't really tell values well
         if self.distTicks < self.TOO_FAR_TICKS:
-            self.distInches = "far"
+            self.distInches = float('inf')
         elif self.distTicks > self.DISCONNECTED:
-            self.distInches = "disconnected"
+            self.distInches = float('nan')
+            warnings.warn('Sensor disconnected')
         else:
             # Trendline for converting ticks to inches found experimentally
             self.distInches = 407924 * pow(self.distTicks, -1.0675)
