@@ -44,11 +44,10 @@ class TAMProxy(object):
     def handle_device_reset(self):
         if self.recovery_data:
             logger.warn("A reset occured with active devices - attempting to recover")
-    
-        self.clear_devices()
-        for device_id, add_vals in self.recovery_data.iteritems():
-            self.add_device(*add_vals)
-        if not self.started: self.started = True
+
+        if not self.started:
+            self.clear_devices()
+            self.started = True
 
     def add_device(self, add_payload, callback):
         self.send_request(self.DEVICELIST_CODE,
