@@ -61,6 +61,7 @@ class ContinuousReadDevice(Device):
 
     def update(self):
         self.tamp.send_request(self.id, self.READ_CODE, self.__handle_update)
+        return self.update_event
 
     def start_continuous(self, weight=1):
         self.tamp.send_request(self.id, self.READ_CODE, self.__handle_update,
