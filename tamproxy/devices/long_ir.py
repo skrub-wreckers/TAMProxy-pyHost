@@ -5,7 +5,7 @@ from .. import config as c
 class LongIR(ContinuousReadDevice):
 
     DEVICE_CODE =   c.devices.ir.code
-    READ_CODE =     c.devices.ir.code
+    READ_CODE =     c.devices.ir.read_code
 
     TOO_FAR_TICKS = 9000
     # Tick range where need to double check with ultrashort IR
