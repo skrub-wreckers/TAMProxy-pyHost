@@ -8,3 +8,4 @@ from .gyro import Gyro
 from .servo import Servo
 from .color import Color
 from .odometer import Odometer
+from .long_ir import LongIR
