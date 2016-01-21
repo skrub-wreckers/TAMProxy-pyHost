@@ -14,7 +14,10 @@ class IRRead(SyncedSketch):
     def loop(self):
         if self.timer.millis() > 100:
             self.timer.reset()
-            print str(self.testpin.dist)
+            # if self.testpin.distInches != "far" :
+            print str(self.testpin.distTicks)
+            print str(self.testpin.distInches)
+            print "---"
 
 if __name__ == "__main__":
     sketch = IRRead(1, -0.00001, 100)
