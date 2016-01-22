@@ -35,6 +35,7 @@ class TAMProxy(object):
         self.started = False
 
     def __enter__(self):
+        self.pf.pc.set_continuous_enabled(True)
         return self
 
     def __exit__(self, *exc):

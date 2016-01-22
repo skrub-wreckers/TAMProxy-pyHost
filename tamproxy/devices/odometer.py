@@ -12,7 +12,7 @@ class Odometer(ContinuousReadDevice):
     DebugReading = namedtuple('DebugReading', 'theta dgyro denc gyro_ok')
     Reading = namedtuple('Reading', 'theta x y omega v gyro_ok')
 
-    def __init__(self, tamproxy, left_enc, right_enc, gyro, alpha, continuous=False):
+    def __init__(self, tamproxy, left_enc, right_enc, gyro, alpha, continuous=True):
         self.left_enc = left_enc
         self.right_enc = right_enc
         self.gyro = gyro
